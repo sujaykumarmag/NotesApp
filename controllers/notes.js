@@ -80,13 +80,9 @@ exports.deleteNote = asyncHandler(async (req, res) => {
     if (!req.params.id) {
         throw new Error('Please give the id ')
     }
-    const note = await Notes.findById(req.params.id);
     const user = await User.findById(req.user.id);
     if (!user) {
         throw new Error('Invalid Authorization')
-    }
-    if (note.user.toString() !== user.id) {
-        throw new Error('User Not  Authorization')
     }
     const notes = await Notes.findByIdAndDelete(req.params.id);
     if (!notes) {
